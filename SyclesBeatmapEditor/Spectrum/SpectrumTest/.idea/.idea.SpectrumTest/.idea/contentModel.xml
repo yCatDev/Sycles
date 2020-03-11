@@ -6,7 +6,6 @@
     <e p="E:\Sycles\SyclesBeatmapEditor\Spectrum\SpectrumTest" t="IncludeFlat">
       <e p="packages" t="ExcludeRecursive" />
       <e p="SpectrumTest" t="IncludeRecursive">
-        <e p="Analyzer.cs" t="Include" />
         <e p="bin" t="ExcludeRecursive" />
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
@@ -16,6 +15,7 @@
           </e>
         </e>
         <e p="Program.cs" t="Include" />
+        <e p="SoundAnalysis.cs" t="Include" />
         <e p="SpectrumTest.csproj" t="IncludeRecursive" />
       </e>
       <e p="SpectrumTest.sln" t="IncludeFlat" />

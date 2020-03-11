@@ -14,48 +14,30 @@ using Utils = Microsoft.VisualBasic.CompilerServices.Utils;
 
 namespace SpectrumTest
 {
-   class Analyzer
+   class SoundAnalysis
     {
         
-        private readonly float[] _fft;               //buffer for fft data
-        //private int _lastlevel;             //last output level
-        //private int _hanctr;                //last output level counter
-        private List<byte> _spectrumdata;   //spectrum data buffer
-        private bool _initialized;          //initialized flag
-        private int devindex;               //used device index
-        
-        private int _lines = 64;            // number of spectrum lines
-        private Timer _t;
+        private readonly float[] _fft;      
+        private List<byte> _spectrumdata;
+        private int _lines = 64;            
+        private Timer _timer;
         private List<string> _devicelist;
 
         private int handle;
 
         public byte[] spetrumData;
         
-        //ctor
-        public Analyzer(string filename)
+        public SoundAnalysis(string filename)
         {
             _fft = new float[8192];
-            _t = new Timer();
-            _t.Elapsed+= _t_Tick;
-            _t.Interval = TimeSpan.FromMilliseconds(25).Milliseconds; //40hz refresh rate//25
+            _timer = new Timer();
+            _timer.Elapsed+= OnTick;
+            _timer.Interval = TimeSpan.FromMilliseconds(25).Milliseconds; 
 
             _spectrumdata = new List<byte>();
-            _initialized = false;
-
-            
             Init(filename);
         }
-
-        // Serial port for arduino output
-
-
-        // flag for display enable
-        public bool DisplayEnable { get; set; }
-
-        //flag for enabling and disabling program functionality
-       
-        // initialization
+        
         private void Init(string filename)
         { 
             
@@ -70,22 +52,21 @@ namespace SpectrumTest
 
             spetrumData = new byte[1];
             
-            _t.Enabled = _t.AutoReset = true;
-            _t.Start();
+            _timer.Enabled = _timer.AutoReset = true;
+            _timer.Start();
         }
-
-        //timer 
-        private void _t_Tick(object sender, EventArgs e)
+        
+        private void OnTick(object sender, EventArgs e)
         {
             
-            int ret = Bass.ChannelGetData(handle,_fft, (int)DataFlags.FFT8192);  //get ch.annel fft data
+            int ret = Bass.ChannelGetData(handle,_fft, (int)DataFlags.FFT8192); 
             Console.WriteLine(Bass.LastError);
             
             if (ret < -1) return;
             int x, y;
             int b0 = 0;
 
-            //computes the spectrum data, the code is taken from a bass_wasapi sample.
+            //FFT from BASS_WASAPI sample
             for (x = 0; x < _lines; x++)
             {
                 float peak = 0;
@@ -100,9 +81,6 @@ namespace SpectrumTest
                 if (y > 255) y = 255;
                 if (y < 0) y = 0;
                 _spectrumdata.Add((byte)y);
-                //Console.SetCursorPosition(0,0);
-                //Console.WriteLine(y);
-                //Console.Write("{0, 3} ", y);
             }
 
             spetrumData = _spectrumdata.ToArray();
@@ -110,8 +88,6 @@ namespace SpectrumTest
 
         }
         
-
-        //cleanup
         public void Free()
         {
             Bass.StreamFree(handle);

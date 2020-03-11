@@ -9,7 +9,7 @@ namespace PartialMusicAnalyzer
     {
         static void Main(string[] args)
         {
-            Analyzer analyzer = new Analyzer("example.mp3");
+            SoundAnalysis analyzer = new SoundAnalysis("example.mp3");
             Console.ReadLine();
             analyzer.Free();
         }

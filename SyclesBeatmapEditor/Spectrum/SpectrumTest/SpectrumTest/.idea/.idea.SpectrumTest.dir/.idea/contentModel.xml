@@ -4,7 +4,6 @@
     <e p="C:\Users\yCatDev\.Rider2019.3\system\extResources" t="IncludeRecursive" />
     <e p="C:\Users\yCatDev\.Rider2019.3\system\resharper-host\local\Transient\ReSharperHost\v193\SolutionCaches\_.19.00" t="ExcludeRecursive" />
     <e p="E:\Sycles\SyclesBeatmapEditor\Spectrum\SpectrumTest\SpectrumTest" t="IncludeRecursive">
-      <e p="Analyzer.cs" t="Include" />
       <e p="bin" t="ExcludeRecursive" />
       <e p="obj" t="ExcludeRecursive">
         <e p="Debug" t="Include">
@@ -15,6 +14,7 @@
       </e>
       <e p="packages" t="ExcludeRecursive" />
       <e p="Program.cs" t="Include" />
+      <e p="SoundAnalysis.cs" t="Include" />
       <e p="SpectrumTest.csproj" t="IncludeRecursive" />
     </e>
   </component>
