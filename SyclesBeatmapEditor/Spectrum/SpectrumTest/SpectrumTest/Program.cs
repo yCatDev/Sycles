@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using SFML.System;
-using SFML.Audio;
 using SFML.Graphics;
 using SFML.Window;
 
@@ -13,7 +10,7 @@ namespace SpectrumTest
         static void Main(string[] args)
         {
             SoundAnalysis analyzer = new SoundAnalysis("test11.mp3");
-            RenderWindow rw = new RenderWindow(new VideoMode(800, 600), "Audio visualizator");
+            RenderWindow rw = new RenderWindow(new VideoMode(800, 600), "Audio visualization");
             rw.Closed += (sender, eventArgs) =>
             {
                 analyzer.Free();
