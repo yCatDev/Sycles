@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using SFML.System;
 using SFML.Audio;
+using SFML.Graphics;
+using SFML.Window;
 
 namespace PartialMusicAnalyzer
 {
@@ -8,14 +12,36 @@ namespace PartialMusicAnalyzer
     {
         static void Main(string[] args)
         {
-            Analyzer analyzer = new Analyzer();
-            analyzer.Enable = true;
-            Music music = new Music("example2.ogg");
-            music.Play();
-            while (music.Status==SoundStatus.Playing)
+            Analyzer analyzer = new Analyzer("test12.mp3");
+            RenderWindow rw = new RenderWindow(new VideoMode(800, 600), "Analyze");
+            
+            while (rw.IsOpen)
             {
-                
+                rw.DispatchEvents();
+                rw.Clear(Color.White);
+                if (analyzer.spetrumData.Length>0)
+                {
+                    for (int i = 0; i < analyzer.spetrumData.Length; i++)
+                    {
+                        var rnd = new Random();
+                        var s = new RectangleShape();
+                        s.OutlineColor = Color.Black;
+                        s.OutlineThickness = 10f;
+                        s.Position = new Vector2f(20*i, 600);
+                        s.Size = new Vector2f(20, -analyzer.spetrumData[i]/2);
+                        rw.Draw(s);
+                    }
+                }
+
+                rw.Display();
             }
+            analyzer.Free();
+            //Music music = new Music("example2.ogg");
+            // music.Play();
+            //while (music.Status==SoundStatus.Playing)
+            //{
+
+            //}
             /*Clock clock = new Clock();
             Sound music = new Sound();
             music.SoundBuffer = new SoundBuffer("example2.ogg");
