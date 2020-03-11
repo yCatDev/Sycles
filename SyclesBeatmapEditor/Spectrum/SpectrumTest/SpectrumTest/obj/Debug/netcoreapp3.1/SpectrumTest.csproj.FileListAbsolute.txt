@@ -72,3 +72,5 @@ E:\Sycles\SyclesBeatmapEditor\Spectrum\SpectrumTest\SpectrumTest\obj\Debug\netco
 E:\Sycles\SyclesBeatmapEditor\Spectrum\SpectrumTest\SpectrumTest\obj\Debug\netcoreapp3.1\SpectrumTest.csproj.CopyComplete
 E:\Sycles\SyclesBeatmapEditor\Spectrum\SpectrumTest\SpectrumTest\obj\Debug\netcoreapp3.1\SpectrumTest.dll
 E:\Sycles\SyclesBeatmapEditor\Spectrum\SpectrumTest\SpectrumTest\obj\Debug\netcoreapp3.1\SpectrumTest.pdb
+E:\Sycles\SyclesBeatmapEditor\Spectrum\SpectrumTest\SpectrumTest\bin\Debug\netcoreapp3.1\ManagedBass.dll
+E:\Sycles\SyclesBeatmapEditor\Spectrum\SpectrumTest\SpectrumTest\bin\Debug\netcoreapp3.1\ManagedBass.Wasapi.dll

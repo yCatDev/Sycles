@@ -239,6 +239,27 @@
           }
         }
       },
+      "ManagedBass/2.0.4": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard1.4/ManagedBass.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.4/ManagedBass.dll": {}
+        }
+      },
+      "ManagedBass.Wasapi/2.0.0": {
+        "type": "package",
+        "dependencies": {
+          "ManagedBass": "1.0.0"
+        },
+        "compile": {
+          "lib/netstandard1.4/ManagedBass.Wasapi.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.4/ManagedBass.Wasapi.dll": {}
+        }
+      },
       "SFML.Audio/2.5.0": {
         "type": "package",
         "dependencies": {
@@ -374,6 +395,36 @@
         "runtimes/win-x86/native/openal32.dll"
       ]
     },
+    "ManagedBass/2.0.4": {
+      "sha512": "+jpks5wa2CAGsT/nQJiv493+KBNujreMOZ2U19r2qsddIst/TQQiueMODSOLgyncODTBIQM3mGDiCHSXXs7ACg==",
+      "type": "package",
+      "path": "managedbass/2.0.4",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/Xamarin.iOS/ManagedBass.dll",
+        "lib/Xamarin.iOS/ManagedBass.xml",
+        "lib/net45/ManagedBass.dll",
+        "lib/net45/ManagedBass.xml",
+        "lib/netstandard1.4/ManagedBass.dll",
+        "lib/netstandard1.4/ManagedBass.xml",
+        "managedbass.2.0.4.nupkg.sha512",
+        "managedbass.nuspec"
+      ]
+    },
+    "ManagedBass.Wasapi/2.0.0": {
+      "sha512": "Vq+Jw9ba3w/OKrY10iK7thDJb4SWkrHiRLd+1ufICXYX8P7sV4TR9z64Yy4tFXFfZqoq4EAnzvddESnsA4IVEQ==",
+      "type": "package",
+      "path": "managedbass.wasapi/2.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netstandard1.4/ManagedBass.Wasapi.dll",
+        "lib/netstandard1.4/ManagedBass.Wasapi.xml",
+        "managedbass.wasapi.2.0.0.nupkg.sha512",
+        "managedbass.wasapi.nuspec"
+      ]
+    },
     "SFML.Audio/2.5.0": {
       "sha512": "M5EIksRefT3nsLT32oEpESStsnlixR+YjKS6fUMl+vDQ3gdMaV4jc84pg3kbfM9w4RYKAyH6OWV4bzDU5FNZyA==",
       "type": "package",
@@ -440,6 +491,8 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
+      "ManagedBass >= 2.0.4",
+      "ManagedBass.Wasapi >= 2.0.0",
       "SFML.Net >= 2.5.0"
     ]
   },
@@ -480,6 +533,14 @@
     "frameworks": {
       "netcoreapp3.1": {
         "dependencies": {
+          "ManagedBass": {
+            "target": "Package",
+            "version": "[2.0.4, )"
+          },
+          "ManagedBass.Wasapi": {
+            "target": "Package",
+            "version": "[2.0.0, )"
+          },
           "SFML.Net": {
             "target": "Package",
             "version": "[2.5.0, )"

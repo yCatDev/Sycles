@@ -1,6 +1,9 @@
 ﻿using System;
-using SFML.Graphics;
+using System.Collections.Generic;
+using System.Linq;
 using SFML.System;
+using SFML.Audio;
+using SFML.Graphics;
 using SFML.Window;
 
 namespace SpectrumTest
@@ -9,46 +12,43 @@ namespace SpectrumTest
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Type file name and press p to play audio");
-            Console.WriteLine("File name is name of audio file stored in Resoureces");
-            Console.WriteLine("File name (ass.wav): ");
-            string fileName = "example2.ogg";
-            //Console.ReadLine();
-            Console.WriteLine("\nLoading...");
-
-            Spectrum spectrum = new Spectrum(fileName);
-
-            bool isPlayed = false;
-            float time_per_frame = 1 / 60.9f;
-            float time_since_last_update = 0.9f;
-            Clock c = new Clock();
-
-            float time_fps = 0.9f;
-            int count_frame = 0;
-
-            RenderWindow window = new RenderWindow(new VideoMode(1000, 600), "Spectrum!");
-            spectrum.Play();
-            isPlayed = true;
-
-
-            while (window.IsOpen)
+            Analyzer analyzer = new Analyzer("test11.mp3");
+            RenderWindow rw = new RenderWindow(new VideoMode(800, 600), "Audio visualizator");
+            rw.Closed += (sender, eventArgs) =>
             {
-                window.DispatchEvents();
-                spectrum.Update(time_per_frame);
-                
-                window.Clear();
-                spectrum.Draw(window);
-                window.Display();
-
-                time_fps += c.ElapsedTime.AsSeconds();
-                count_frame++;
-                if (time_fps >= 1.0f)
+                analyzer.Free();
+                Environment.Exit(0);
+            };
+            
+            while (rw.IsOpen)
+            {
+                rw.DispatchEvents();
+                rw.Clear(Color.White);
+                if (analyzer.spetrumData.Length>0)
                 {
-                    time_fps -= 1.0f;
-                    
-                    count_frame = 0;
+                    for (int i = 0; i < analyzer.spetrumData.Length; i++)
+                    {
+                        var rnd = new Random();
+                        var s = new RectangleShape();
+                        s.OutlineColor = Color.Black;
+                        s.OutlineThickness = 10f;
+                        s.Position = new Vector2f(20*i, 600);
+                        s.Size = new Vector2f(20, -analyzer.spetrumData[i]/2);
+                        
+                        var r = new RectangleShape();
+                        r.OutlineColor = Color.Black;
+                        r.OutlineThickness = 10f;
+                        r.Position = new Vector2f(20*i, 0);
+                        r.Size = new Vector2f(20, analyzer.spetrumData[i]/2);
+                        rw.Draw(s);
+                        rw.Draw(r);
+                    }
                 }
+
+                rw.Display();
             }
+            analyzer.Free();
         }
     }
+    
 }

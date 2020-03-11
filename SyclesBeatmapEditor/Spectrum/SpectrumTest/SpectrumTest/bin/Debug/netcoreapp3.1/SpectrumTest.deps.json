@@ -8,6 +8,8 @@
     ".NETCoreApp,Version=v3.1": {
       "SpectrumTest/1.0.0": {
         "dependencies": {
+          "ManagedBass": "2.0.4",
+          "ManagedBass.Wasapi": "2.0.0",
           "SFML.Net": "2.5.0"
         },
         "runtime": {
@@ -308,6 +310,25 @@
           }
         }
       },
+      "ManagedBass/2.0.4": {
+        "runtime": {
+          "lib/netstandard1.4/ManagedBass.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "ManagedBass.Wasapi/2.0.0": {
+        "dependencies": {
+          "ManagedBass": "2.0.4"
+        },
+        "runtime": {
+          "lib/netstandard1.4/ManagedBass.Wasapi.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
       "SFML.Audio/2.5.0": {
         "dependencies": {
           "CSFML": "2.5.0",
@@ -380,6 +401,20 @@
       "sha512": "sha512-A3X+zyjAtvIQkpwCSS/F5fDOFRWeT+USIAK+DhGujNufF+qV1ty5cYGJihmmGeokX3yd89uZoNH8mcsmXCY/yw==",
       "path": "csfml/2.5.0",
       "hashPath": "csfml.2.5.0.nupkg.sha512"
+    },
+    "ManagedBass/2.0.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-+jpks5wa2CAGsT/nQJiv493+KBNujreMOZ2U19r2qsddIst/TQQiueMODSOLgyncODTBIQM3mGDiCHSXXs7ACg==",
+      "path": "managedbass/2.0.4",
+      "hashPath": "managedbass.2.0.4.nupkg.sha512"
+    },
+    "ManagedBass.Wasapi/2.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Vq+Jw9ba3w/OKrY10iK7thDJb4SWkrHiRLd+1ufICXYX8P7sV4TR9z64Yy4tFXFfZqoq4EAnzvddESnsA4IVEQ==",
+      "path": "managedbass.wasapi/2.0.0",
+      "hashPath": "managedbass.wasapi.2.0.0.nupkg.sha512"
     },
     "SFML.Audio/2.5.0": {
       "type": "package",
