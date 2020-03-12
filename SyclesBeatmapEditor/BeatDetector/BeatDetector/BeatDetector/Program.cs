@@ -37,22 +37,22 @@ namespace SpectrumTest
                 {
                     col = new Color((byte) (col.R+1),(byte) (col.R+1),(byte) (col.R+1));
                 }
-                if (analyzer.spetrumData.Length>0)
+                if (analyzer.oldSpetrumData.Length>0)
                 {
                     
-                    for (int i = 0; i < analyzer.spetrumData.Length; i++)
+                    for (int i = 0; i < analyzer.oldSpetrumData.Length; i++)
                     {
                         var s = new RectangleShape();
                         s.OutlineColor = Color.Black;
                         s.OutlineThickness = 10f;
                         s.Position = new Vector2f(20*i, 600);
-                        s.Size = new Vector2f(20, -analyzer.spetrumData[i]/2);
+                        s.Size = new Vector2f(20, -analyzer.oldSpetrumData[i]/2);
                         
                         var r = new RectangleShape();
                         r.OutlineColor = Color.Black;
                         r.OutlineThickness = 10f;
                         r.Position = new Vector2f(20*i, 0);
-                        r.Size = new Vector2f(20, analyzer.spetrumData[i]/2);
+                        r.Size = new Vector2f(20, analyzer.oldSpetrumData[i]/2);
                         
                         rw.Draw(s);
                         rw.Draw(r);

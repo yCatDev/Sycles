@@ -28,7 +28,7 @@ namespace SpectrumTest
             
         private int handle;
 
-        public byte[] spetrumData;
+        public byte[] oldSpetrumData;
 
         internal delegate void BeatHandler();
 
@@ -59,7 +59,7 @@ namespace SpectrumTest
             Bass.SuppressMP3ErrorCorruptionSilence = true;
             Console.WriteLine(Bass.LastError);
 
-            spetrumData = new byte[1];
+            oldSpetrumData = new byte[1];
             
             _timer.Enabled = _timer.AutoReset = true;
             _timer.Start();
@@ -91,13 +91,13 @@ namespace SpectrumTest
             }
             
             float tmp_beat = 0;
-            float middleBeat = 0;
             
-            for (int i = 0; i < spetrumData.Length; i++)
+            
+            for (int i = 9; i < oldSpetrumData.Length; i++)
             {
-                tmp_beat += (_spectrumdata[i]-spetrumData[i]);
+                tmp_beat += (_spectrumdata[i]-oldSpetrumData[i]);
             }
-            tmp_beat /= spetrumData.Length;
+            tmp_beat /= oldSpetrumData.Length-10;
             if (tmp_beat > beat && _clock.ElapsedTime.AsSeconds()>0.15f)
             {
                 beat = tmp_beat;
@@ -111,7 +111,7 @@ namespace SpectrumTest
             }
 
             
-            spetrumData = _spectrumdata.ToArray();
+            oldSpetrumData = _spectrumdata.ToArray();
             _spectrumdata.Clear();
 
         }
