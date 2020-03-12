@@ -2,6 +2,10 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PartialMusicAnalyzer", "PartialMusicAnalyzer\PartialMusicAnalyzer\PartialMusicAnalyzer.csproj", "{F5CAD0E3-01F5-43C9-9810-440B01FD0974}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpectrumTest", "Spectrum\SpectrumTest\SpectrumTest\SpectrumTest.csproj", "{57E611FA-4DC6-41D3-B8FA-D1B1B496BACA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeatDetector", "BeatDetector\BeatDetector\BeatDetector\BeatDetector.csproj", "{9C1E889F-CAC7-404F-B710-FDBD34258336}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +16,13 @@ Global
 		{F5CAD0E3-01F5-43C9-9810-440B01FD0974}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F5CAD0E3-01F5-43C9-9810-440B01FD0974}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F5CAD0E3-01F5-43C9-9810-440B01FD0974}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57E611FA-4DC6-41D3-B8FA-D1B1B496BACA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57E611FA-4DC6-41D3-B8FA-D1B1B496BACA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57E611FA-4DC6-41D3-B8FA-D1B1B496BACA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57E611FA-4DC6-41D3-B8FA-D1B1B496BACA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C1E889F-CAC7-404F-B710-FDBD34258336}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C1E889F-CAC7-404F-B710-FDBD34258336}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C1E889F-CAC7-404F-B710-FDBD34258336}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C1E889F-CAC7-404F-B710-FDBD34258336}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

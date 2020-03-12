@@ -8,6 +8,7 @@ using System.Timers;
 using SFML.System;
 using SFML.Audio;
 using ManagedBass;
+
 //using static ManagedBass.Bass;
 //using ManagedBass.Wasapi;
 using Utils = Microsoft.VisualBasic.CompilerServices.Utils;
@@ -17,22 +18,24 @@ namespace SpectrumTest
    class SoundAnalysis
     {
         
+        
         private readonly float[] _fft;      
         private List<byte> _spectrumdata;
         private int _lines = 64;            
         private Timer _timer;
         private List<string> _devicelist;
-
+        
         private int handle;
 
         public byte[] spetrumData;
         
         public SoundAnalysis(string filename)
         {
-            _fft = new float[8192];
+            
+            _fft = new float[16384];
             _timer = new Timer();
             _timer.Elapsed+= OnTick;
-            _timer.Interval = TimeSpan.FromMilliseconds(25).Milliseconds; 
+            _timer.Interval = TimeSpan.FromMilliseconds(10).Milliseconds; 
 
             _spectrumdata = new List<byte>();
             Init(filename);
@@ -59,9 +62,7 @@ namespace SpectrumTest
         private void OnTick(object sender, EventArgs e)
         {
             
-            int ret = Bass.ChannelGetData(handle,_fft, (int)DataFlags.FFT8192); 
-            Console.WriteLine(Bass.LastError);
-            
+            int ret = Bass.ChannelGetData(handle,_fft, (int)DataFlags.FFT16384);
             if (ret < -1) return;
             int x, y;
             int b0 = 0;

@@ -4,9 +4,21 @@
     <e p="C:\Users\yCatDev\.Rider2019.3\system\extResources" t="IncludeRecursive" />
     <e p="C:\Users\yCatDev\.Rider2019.3\system\resharper-host\local\Transient\ReSharperHost\v193\SolutionCaches\_SyclesBeatmapEditor.503897676.00" t="ExcludeRecursive" />
     <e p="E:\Sycles\SyclesBeatmapEditor" t="IncludeFlat">
+      <e p="BeatDetector\BeatDetector\BeatDetector" t="IncludeRecursive">
+        <e p="BeatDetector.csproj" t="IncludeRecursive" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp3.1" t="Include">
+              <e p="BeatDetector.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Program.cs" t="Include" />
+        <e p="SoundAnalysis.cs" t="Include" />
+      </e>
       <e p="packages" t="ExcludeRecursive" />
       <e p="PartialMusicAnalyzer\PartialMusicAnalyzer" t="IncludeRecursive">
-        <e p="Analyzer.cs" t="Include" />
         <e p="bin" t="ExcludeRecursive" />
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
@@ -17,6 +29,20 @@
         </e>
         <e p="PartialMusicAnalyzer.csproj" t="IncludeRecursive" />
         <e p="Program.cs" t="Include" />
+        <e p="SoundAnalysis.cs" t="Include" />
+      </e>
+      <e p="Spectrum\SpectrumTest\SpectrumTest" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp3.1" t="Include">
+              <e p="SpectrumTest.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Program.cs" t="Include" />
+        <e p="SoundAnalysis.cs" t="Include" />
+        <e p="SpectrumTest.csproj" t="IncludeRecursive" />
       </e>
       <e p="SyclesBeatmapEditor.sln" t="IncludeFlat" />
     </e>

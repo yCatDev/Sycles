@@ -12,9 +12,9 @@ using ManagedBass;
 //using ManagedBass.Wasapi;
 using Utils = Microsoft.VisualBasic.CompilerServices.Utils;
 
-namespace SpectrumTest
+namespace PartialMusicAnalyzer
 {
-   class SoundAnalysis
+   class SoundAnalysis: IDisposable
     {
         
         private readonly float[] _fft;      
@@ -22,7 +22,7 @@ namespace SpectrumTest
         private int _lines = 64;            
         private Timer _timer;
         private List<string> _devicelist;
-
+        private StreamWriter _streamWriter;
         private int handle;
 
         public byte[] spetrumData;
@@ -51,16 +51,17 @@ namespace SpectrumTest
             Console.WriteLine(Bass.LastError);
 
             spetrumData = new byte[1];
-            
-            _timer.Enabled = _timer.AutoReset = true;
-            _timer.Start();
+
+            _timer.Enabled = false;
+            //_timer.Enabled = _timer.AutoReset = true;
+            //_timer.Start();
         }
         
         private void OnTick(object sender, EventArgs e)
         {
             
-            int ret = Bass.ChannelGetData(handle,_fft, (int)DataFlags.FFT8192); 
-            Console.WriteLine(Bass.LastError);
+            int ret = Bass.ChannelGetData(handle,_fft, (int)DataFlags.FFT8192);
+            //Console.WriteLine(Bass.LastError);
             
             if (ret < -1) return;
             int x, y;
@@ -87,9 +88,42 @@ namespace SpectrumTest
             _spectrumdata.Clear();
 
         }
-        
-        public void Free()
+
+        public void WriteSpectrumToFile(string af, string filename)
         {
+            _streamWriter = new StreamWriter(filename);
+
+            
+            //SampleInfo sampleInfo = new SampleInfo();
+            SampleInfo sampleInfo = new SampleInfo();
+            //var sample_handle = Bass.SampleGetChannel(handle);
+            //Console.WriteLine(sample_handle);
+            var h = Bass.SampleLoad(af, 0, 0, 1,BassFlags.Default);
+            Bass.SampleGetInfo(h, ref sampleInfo);
+            
+            int len = sampleInfo.Length;
+            int freq = sampleInfo.Frequency;
+            Console.WriteLine($"{len} {freq}");
+            float[] samples = new float[len];
+            Bass.SampleGetData(h, samples);
+            
+            for (int i = 0; i < len-1; i++)
+            {
+                string str = "";
+                for (int j = (int) (freq*i); j < freq; j++)
+                {
+                    str += $"{samples[j]} ";
+                }
+                _streamWriter.WriteLine(str);
+            }
+            
+            _streamWriter.Flush();
+            _streamWriter.Close();
+        }
+
+        public void Dispose()
+        {
+            _timer?.Dispose();
             Bass.StreamFree(handle);
             Bass.Free();
         }
