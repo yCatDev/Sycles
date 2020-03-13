@@ -11,7 +11,7 @@ namespace SpectrumTest
     {
         static void Main(string[] args)
         {
-            SoundAnalysis analyzer = new SoundAnalysis("leps.mp3");
+            SoundAnalysis analyzer = new SoundAnalysis("test12.mp3");
             RenderWindow rw = new RenderWindow(new VideoMode(1250, 600), "Audio visualization");
                
             rw.Closed += (sender, eventArgs) =>

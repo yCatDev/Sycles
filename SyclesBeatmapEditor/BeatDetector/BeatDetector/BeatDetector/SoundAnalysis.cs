@@ -41,7 +41,7 @@ namespace SpectrumTest
             _fft = new float[16384];
             _timer = new Timer();
             _timer.Elapsed+= OnTick;
-            _timer.Interval = TimeSpan.FromMilliseconds(6).Milliseconds; 
+            _timer.Interval = TimeSpan.FromMilliseconds(1).Milliseconds; 
 
             _spectrumdata = new List<byte>();
             Init(filename);
@@ -109,7 +109,8 @@ namespace SpectrumTest
             }
             else
             {
-                beat /=1.1f;
+                //if (beat/1.1f>tmp_beat)
+                    beat /=1.1f;
             }
 
             
