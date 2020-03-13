@@ -41,7 +41,7 @@ namespace SpectrumTest
             _fft = new float[16384];
             _timer = new Timer();
             _timer.Elapsed+= OnTick;
-            _timer.Interval = TimeSpan.FromMilliseconds(120).Milliseconds; 
+            _timer.Interval = TimeSpan.FromMilliseconds(6).Milliseconds; 
 
             _spectrumdata = new List<byte>();
             Init(filename);
@@ -95,23 +95,21 @@ namespace SpectrumTest
             int c = 0;
             for (int i = 0; i < oldSpetrumData.Length; i++)
             {
-                if (_spectrumdata[i] > 50 && oldSpetrumData[i] > 50)
-                {
+               
                     tmp_beat += (_spectrumdata[i] - oldSpetrumData[i]);
-                    c++;
-                }
+              
             }
             tmp_beat /= oldSpetrumData.Length;
-            if (tmp_beat > beat && _clock.ElapsedTime.AsSeconds()>0.15f)
+            if (tmp_beat>0.2 && tmp_beat > beat && _clock.ElapsedTime.AsSeconds()>0.2f)
             {
                 beat = tmp_beat;
                 OnBeat?.Invoke();
-                Console.WriteLine($"Beat on {_clock.ElapsedTime.AsSeconds()}");
+                Console.WriteLine($"Beat on {_clock.ElapsedTime.AsSeconds()}, difference is {beat}");
                 _clock.Restart();
             }
             else
             {
-                beat = 0;
+                beat /=1.1f;
             }
 
             

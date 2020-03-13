@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using SFML.System;
 using SFML.Graphics;
 using SFML.Window;
@@ -10,7 +11,7 @@ namespace SpectrumTest
     {
         static void Main(string[] args)
         {
-            SoundAnalysis analyzer = new SoundAnalysis("test14.mp3");
+            SoundAnalysis analyzer = new SoundAnalysis("leps.mp3");
             RenderWindow rw = new RenderWindow(new VideoMode(1250, 600), "Audio visualization");
                
             rw.Closed += (sender, eventArgs) =>
@@ -28,15 +29,12 @@ namespace SpectrumTest
             beat.Position = new Vector2f(0, 300);
             beat.FillColor = Color.Black;
             beat.OutlineColor = Color.Black;
-            analyzer.OnBeat += () => col = Color.Black;
+            //analyzer.OnBeat += () => col = Color.Black;
             while (rw.IsOpen)
             {
                 rw.DispatchEvents();
                 rw.Clear(col);
-                if (col.R != 255)
-                {
-                    col = new Color((byte) (col.R+1),(byte) (col.R+1),(byte) (col.R+1));
-                }
+           
                 if (analyzer.oldSpetrumData.Length>0)
                 {
                     
