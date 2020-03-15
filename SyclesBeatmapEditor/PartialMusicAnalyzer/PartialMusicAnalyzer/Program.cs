@@ -1,61 +1,72 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using SFML.Graphics;
 using SFML.System;
 using SFML.Window;
+using Newtonsoft.Json;
 
 
 namespace PartialMusicAnalyzer
 {
     class Program
     {
+     
         static void Main(string[] args)
         {
-            //TICKET
-            SoundAnalysis analyzer = new SoundAnalysis("test9.mp3");
+            
+            BeatMap beats = new BeatMap();
+            SoundAnalysis analyzer = new SoundAnalysis("Nightmare.mp3");
+            analyzer.OnBeat += delay =>
+            {
+                beats.Add(new Beat()
+                {
+                    Delay = delay,
+                    BeatType = BeatType.Regular
+                });
+            }; 
             RenderWindow rw = new RenderWindow(new VideoMode(1250, 600), "Audio visualization");
                
             rw.Closed += (sender, eventArgs) =>
             {
+                var json = JsonConvert.SerializeObject(beats.GetArray());
+                var file = new StreamWriter("beatmap.json");
+                file.Write(json);
+                file.Flush();
+                file.Close();
                 analyzer.Free();
                 Environment.Exit(0);
             };
             
             Color col = Color.White;
+
+            var s = new RectangleShape();
+            s.OutlineColor = Color.Black;
+            s.OutlineThickness = 10f;
             
-            //analyzer.OnBeat += () => col = Color.Black;
             while (rw.IsOpen)
             {
                 rw.DispatchEvents();
                 rw.Clear(col);
-           
-                if (analyzer.oldSpetrumData.Length>0)
-                {
-                    
+                
                     for (int i = 0; i < analyzer.oldSpetrumData.Length; i++)
                     {
-                        var s = new RectangleShape();
-                        s.OutlineColor = Color.Black;
-                        s.OutlineThickness = 10f;
-                        s.Position = new Vector2f(20*i, 600);
-                        s.Size = new Vector2f(20, -analyzer.oldSpetrumData[i]/2);
-                        
-                        var r = new RectangleShape();
-                        r.OutlineColor = Color.Black;
-                        r.OutlineThickness = 10f;
-                        r.Position = new Vector2f(20*i, 0);
-                        r.Size = new Vector2f(20, analyzer.oldSpetrumData[i]/2);
+                        s.Position = new Vector2f(20 * i, 600);
+                        s.Size = new Vector2f(20, -analyzer.oldSpetrumData[i] / 2);
                         
                         rw.Draw(s);
-                        rw.Draw(r);
+                        
+                        s.Position = new Vector2f(20 * i, 0);
+                        s.Size = new Vector2f(20, analyzer.oldSpetrumData[i] / 2);
 
+                        rw.Draw(s);
                     }
-                }
+
                 rw.Display();
             }
-            analyzer.Free();
         }
+        
     }
     
 }

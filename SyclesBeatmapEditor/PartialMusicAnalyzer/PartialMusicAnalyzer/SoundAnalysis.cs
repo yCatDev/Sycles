@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Net.NetworkInformation;
-using System.Threading.Channels;
 using System.Timers;
 using SFML.System;
-using SFML.Audio;
 using ManagedBass;
+
+
 //using static ManagedBass.Bass;
 //using ManagedBass.Wasapi;
 using Utils = Microsoft.VisualBasic.CompilerServices.Utils;
@@ -19,7 +17,7 @@ namespace PartialMusicAnalyzer
         
         
         private readonly float[] _fft;      
-        private List<byte> _spectrumdata;
+        
         private int _lines = 64;            
         private Timer _timer;
         private List<string> _devicelist;
@@ -28,11 +26,14 @@ namespace PartialMusicAnalyzer
             
         private int handle;
 
+        public byte[] newSpectrumData;
         public byte[] oldSpetrumData;
 
-        internal delegate void BeatHandler();
+        internal delegate void BeatHandler(float delay);
+        internal delegate void TickHandler(byte[] spec);
 
         public event BeatHandler OnBeat;
+        public event TickHandler OnSpectrum;
         
         public SoundAnalysis(string filename)
         {
@@ -43,7 +44,7 @@ namespace PartialMusicAnalyzer
             _timer.Elapsed+= OnTick;
             _timer.Interval = TimeSpan.FromMilliseconds(50).Milliseconds; 
 
-            _spectrumdata = new List<byte>();
+            newSpectrumData = new byte[_lines];
             Init(filename);
         }
         
@@ -67,7 +68,7 @@ namespace PartialMusicAnalyzer
         
         private void OnTick(object sender, EventArgs e)
         {
-            
+            float tick_time  = (float) Bass.ChannelBytes2Seconds(handle,Bass.ChannelGetPosition(handle, PositionFlags.Bytes));
             int ret = Bass.ChannelGetData(handle,_fft, (int)DataFlags.FFT16384);
             if (ret < -1) return;
             int x, y;
@@ -87,36 +88,45 @@ namespace PartialMusicAnalyzer
                 y = (int)(Math.Sqrt(peak) * 3 * 255 - 4);
                 if (y > 255) y = 255;
                 if (y < 0) y = 0;
-                _spectrumdata.Add((byte)y);
+                newSpectrumData[x] = ((byte)y);
             }
-            
-            float tmp_beat = 0;
 
-            int c = 0;
-            for (int i = 0; i < oldSpetrumData.Length; i++)
+            float delay = _clock.ElapsedTime.AsSeconds();
+            if (delay>0.25f && DetectBeat(ref beat, newSpectrumData,  oldSpetrumData))
             {
-               if (_spectrumdata[i]>30 || oldSpetrumData[i]>30)
-                    tmp_beat += (_spectrumdata[i] - oldSpetrumData[i]);
-              
-            }
-            tmp_beat /= oldSpetrumData.Length;
-            if (tmp_beat>1f && tmp_beat > beat && _clock.ElapsedTime.AsSeconds()>0.25f)
-            {
-                beat = tmp_beat;
-                OnBeat?.Invoke();
-                Console.WriteLine($"Beat on {_clock.ElapsedTime.AsSeconds()}, difference is {beat}");
+                
+                Console.WriteLine($"Beat! {tick_time}");
+                OnBeat?.Invoke(tick_time);
                 _clock.Restart();
             }
-            else
+
+            oldSpetrumData = newSpectrumData;
+            newSpectrumData = new byte[_lines];
+            
+            OnSpectrum?.Invoke(newSpectrumData);
+        }
+
+        private bool DetectBeat(ref float beat,byte[] specNew, byte[] specOld)
+        {
+            float tmp_beat = 0;
+            
+            for (int i = 0; i < specOld.Length; i++)
             {
-                //if (beat/1.1f>tmp_beat)
-                    beat /=1.1f;
+               // if (specNew[i]>30 && specOld[i]>30)
+                    tmp_beat += (specNew[i] - specOld[i]);
+            }
+            
+            tmp_beat /= specOld.Length;
+            
+            if (tmp_beat>0.5f && tmp_beat > beat)
+            {
+                beat = tmp_beat;
+                //Console.WriteLine($"Beat! Difference is {beat}");
+                return true;
             }
 
-            
-            oldSpetrumData = _spectrumdata.ToArray();
-            _spectrumdata.Clear();
-
+            beat = tmp_beat/1.1f;
+            return false;
         }
         
         public void Free()
@@ -124,5 +134,42 @@ namespace PartialMusicAnalyzer
             Bass.StreamFree(handle);
             Bass.Free();
         }
+        
     }
+
+   class BeatMap
+   {
+       private List<Beat> _beats;
+       public BeatMap()
+       {
+           _beats = new List<Beat>(0);
+           _beats.Add(new Beat(){BeatType = 0, Delay =  0});
+       }
+
+       public new void Add(Beat beat)
+       {
+           
+           
+           if (Math.Abs(beat.Delay - _beats.Last().Delay) < 0.15f)
+           {
+               _beats.Remove(_beats.Last());
+           }
+           _beats.Add(beat);
+       }
+
+       public List<Beat> GetArray() => _beats;
+   }
+   
+   public enum BeatType
+   {
+       Regular,
+       Hold,
+       Double
+   }; 
+   struct Beat
+   {
+       public float Delay { get; set; }
+       public BeatType BeatType { get; set; }
+   }
+   
 }

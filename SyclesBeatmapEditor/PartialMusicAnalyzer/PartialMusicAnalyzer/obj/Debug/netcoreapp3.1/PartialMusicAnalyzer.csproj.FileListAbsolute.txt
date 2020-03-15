@@ -74,3 +74,4 @@ E:\Sycles\SyclesBeatmapEditor\PartialMusicAnalyzer\PartialMusicAnalyzer\bin\Debu
 E:\Sycles\SyclesBeatmapEditor\PartialMusicAnalyzer\PartialMusicAnalyzer\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\openal32.dll
 E:\Sycles\SyclesBeatmapEditor\PartialMusicAnalyzer\PartialMusicAnalyzer\bin\Debug\netcoreapp3.1\ManagedBass.dll
 E:\Sycles\SyclesBeatmapEditor\PartialMusicAnalyzer\PartialMusicAnalyzer\bin\Debug\netcoreapp3.1\ManagedBass.Wasapi.dll
+E:\Sycles\SyclesBeatmapEditor\PartialMusicAnalyzer\PartialMusicAnalyzer\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
