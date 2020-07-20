@@ -17,13 +17,15 @@ namespace PartialMusicAnalyzer
         {
             
             BeatMap beats = new BeatMap();
-            SoundAnalysis analyzer = new SoundAnalysis("Nightmare.mp3");
-            analyzer.OnBeat += delay =>
+            string filename = "xevel";
+            SoundAnalysis analyzer = new SoundAnalysis($"{filename}.mp3");
+            analyzer.OnBeat += (delay, tempo,type) =>
             {
                 beats.Add(new Beat()
                 {
                     Delay = delay,
-                    BeatType = BeatType.Regular
+                    Tempo = tempo,
+                    BeatType = type
                 });
             }; 
             RenderWindow rw = new RenderWindow(new VideoMode(1250, 600), "Audio visualization");
@@ -31,7 +33,7 @@ namespace PartialMusicAnalyzer
             rw.Closed += (sender, eventArgs) =>
             {
                 var json = JsonConvert.SerializeObject(beats.GetArray());
-                var file = new StreamWriter("beatmap.json");
+                var file = new StreamWriter($"{filename}.json");
                 file.Write(json);
                 file.Flush();
                 file.Close();

@@ -1,20 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Sycles\\SyclesBeatmapEditor\\BeatDetector\\BeatDetector\\BeatDetector\\BeatDetector.csproj": {}
+    "Y:\\Sycles-old\\SyclesBeatmapEditor\\BeatDetector\\BeatDetector\\BeatDetector\\BeatDetector.csproj": {}
   },
   "projects": {
-    "E:\\Sycles\\SyclesBeatmapEditor\\BeatDetector\\BeatDetector\\BeatDetector\\BeatDetector.csproj": {
+    "Y:\\Sycles-old\\SyclesBeatmapEditor\\BeatDetector\\BeatDetector\\BeatDetector\\BeatDetector.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Sycles\\SyclesBeatmapEditor\\BeatDetector\\BeatDetector\\BeatDetector\\BeatDetector.csproj",
+        "projectUniqueName": "Y:\\Sycles-old\\SyclesBeatmapEditor\\BeatDetector\\BeatDetector\\BeatDetector\\BeatDetector.csproj",
         "projectName": "BeatDetector",
-        "projectPath": "E:\\Sycles\\SyclesBeatmapEditor\\BeatDetector\\BeatDetector\\BeatDetector\\BeatDetector.csproj",
-        "packagesPath": "C:\\Users\\yCatDev\\.nuget\\packages\\",
-        "outputPath": "E:\\Sycles\\SyclesBeatmapEditor\\BeatDetector\\BeatDetector\\BeatDetector\\obj\\",
+        "projectPath": "Y:\\Sycles-old\\SyclesBeatmapEditor\\BeatDetector\\BeatDetector\\BeatDetector\\BeatDetector.csproj",
+        "packagesPath": "C:\\Users\\ycatd\\.nuget\\packages\\",
+        "outputPath": "Y:\\Sycles-old\\SyclesBeatmapEditor\\BeatDetector\\BeatDetector\\BeatDetector\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\yCatDev\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ycatd\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -61,12 +64,18 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[3.1.2, 3.1.2]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.300\\RuntimeIdentifierGraph.json"
         }
       }
     }

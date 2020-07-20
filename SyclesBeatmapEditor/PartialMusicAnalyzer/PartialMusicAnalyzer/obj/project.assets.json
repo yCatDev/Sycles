@@ -538,19 +538,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\yCatDev\\.nuget\\packages\\": {}
+    "C:\\Users\\ycatd\\.nuget\\packages\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\Sycles\\SyclesBeatmapEditor\\PartialMusicAnalyzer\\PartialMusicAnalyzer\\PartialMusicAnalyzer.csproj",
+      "projectUniqueName": "Y:\\Sycles-old\\SyclesBeatmapEditor\\PartialMusicAnalyzer\\PartialMusicAnalyzer\\PartialMusicAnalyzer.csproj",
       "projectName": "PartialMusicAnalyzer",
-      "projectPath": "E:\\Sycles\\SyclesBeatmapEditor\\PartialMusicAnalyzer\\PartialMusicAnalyzer\\PartialMusicAnalyzer.csproj",
-      "packagesPath": "C:\\Users\\yCatDev\\.nuget\\packages\\",
-      "outputPath": "E:\\Sycles\\SyclesBeatmapEditor\\PartialMusicAnalyzer\\PartialMusicAnalyzer\\obj\\",
+      "projectPath": "Y:\\Sycles-old\\SyclesBeatmapEditor\\PartialMusicAnalyzer\\PartialMusicAnalyzer\\PartialMusicAnalyzer.csproj",
+      "packagesPath": "C:\\Users\\ycatd\\.nuget\\packages\\",
+      "outputPath": "Y:\\Sycles-old\\SyclesBeatmapEditor\\PartialMusicAnalyzer\\PartialMusicAnalyzer\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      ],
       "configFilePaths": [
-        "C:\\Users\\yCatDev\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\ycatd\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -601,12 +605,18 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.AspNetCore.App.Ref",
+            "version": "[3.1.2, 3.1.2]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.101\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.300\\RuntimeIdentifierGraph.json"
       }
     }
   }

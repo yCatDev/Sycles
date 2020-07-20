@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="C:\Users\yCatDev\.Rider2019.3\system\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\yCatDev\.Rider2019.3\system\resharper-host\local\Transient\ReSharperHost\v193\SolutionCaches\_SyclesBeatmapEditor.503897676.00" t="ExcludeRecursive" />
-    <e p="E:\Sycles\SyclesBeatmapEditor" t="IncludeFlat">
+    <e p="C:\Users\ycatd\AppData\local\JetBrains\Rider2020.1\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\ycatd\AppData\local\JetBrains\Rider2020.1\resharper-host\local\Transient\ReSharperHost\v201\SolutionCaches\_SyclesBeatmapEditor.-662157894.00" t="ExcludeRecursive" />
+    <e p="Y:\Sycles-old\SyclesBeatmapEditor" t="IncludeFlat">
       <e p="BeatDetector\BeatDetector\BeatDetector" t="IncludeRecursive">
         <e p="BeatDetector.csproj" t="IncludeRecursive" />
         <e p="bin" t="ExcludeRecursive" />
