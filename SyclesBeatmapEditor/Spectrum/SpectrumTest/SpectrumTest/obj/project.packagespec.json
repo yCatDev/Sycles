@@ -1,10 +1,10 @@
 ﻿{
   "version": "1.0.0",
   "restore": {
-    "projectUniqueName": "Y:\\Sycles-old\\SyclesBeatmapEditor\\Spectrum\\SpectrumTest\\SpectrumTest\\SpectrumTest.csproj",
+    "projectUniqueName": "Y:\\Sycles\\SyclesBeatmapEditor\\Spectrum\\SpectrumTest\\SpectrumTest\\SpectrumTest.csproj",
     "projectName": "SpectrumTest",
-    "projectPath": "Y:\\Sycles-old\\SyclesBeatmapEditor\\Spectrum\\SpectrumTest\\SpectrumTest\\SpectrumTest.csproj",
-    "outputPath": "Y:\\Sycles-old\\SyclesBeatmapEditor\\Spectrum\\SpectrumTest\\SpectrumTest\\obj\\",
+    "projectPath": "Y:\\Sycles\\SyclesBeatmapEditor\\Spectrum\\SpectrumTest\\SpectrumTest\\SpectrumTest.csproj",
+    "outputPath": "Y:\\Sycles\\SyclesBeatmapEditor\\Spectrum\\SpectrumTest\\SpectrumTest\\obj\\",
     "projectStyle": "PackageReference",
     "fallbackFolders": [
       "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

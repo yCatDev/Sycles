@@ -503,11 +503,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "Y:\\Sycles-old\\SyclesBeatmapEditor\\BeatDetector\\BeatDetector\\BeatDetector\\BeatDetector.csproj",
+      "projectUniqueName": "Y:\\Sycles\\SyclesBeatmapEditor\\BeatDetector\\BeatDetector\\BeatDetector\\BeatDetector.csproj",
       "projectName": "BeatDetector",
-      "projectPath": "Y:\\Sycles-old\\SyclesBeatmapEditor\\BeatDetector\\BeatDetector\\BeatDetector\\BeatDetector.csproj",
+      "projectPath": "Y:\\Sycles\\SyclesBeatmapEditor\\BeatDetector\\BeatDetector\\BeatDetector\\BeatDetector.csproj",
       "packagesPath": "C:\\Users\\ycatd\\.nuget\\packages\\",
-      "outputPath": "Y:\\Sycles-old\\SyclesBeatmapEditor\\BeatDetector\\BeatDetector\\BeatDetector\\obj\\",
+      "outputPath": "Y:\\Sycles\\SyclesBeatmapEditor\\BeatDetector\\BeatDetector\\BeatDetector\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

@@ -544,11 +544,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "Y:\\Sycles-old\\SyclesBeatmapEditor\\PartialMusicAnalyzer\\PartialMusicAnalyzer\\PartialMusicAnalyzer.csproj",
+      "projectUniqueName": "Y:\\Sycles\\SyclesBeatmapEditor\\PartialMusicAnalyzer\\PartialMusicAnalyzer\\PartialMusicAnalyzer.csproj",
       "projectName": "PartialMusicAnalyzer",
-      "projectPath": "Y:\\Sycles-old\\SyclesBeatmapEditor\\PartialMusicAnalyzer\\PartialMusicAnalyzer\\PartialMusicAnalyzer.csproj",
+      "projectPath": "Y:\\Sycles\\SyclesBeatmapEditor\\PartialMusicAnalyzer\\PartialMusicAnalyzer\\PartialMusicAnalyzer.csproj",
       "packagesPath": "C:\\Users\\ycatd\\.nuget\\packages\\",
-      "outputPath": "Y:\\Sycles-old\\SyclesBeatmapEditor\\PartialMusicAnalyzer\\PartialMusicAnalyzer\\obj\\",
+      "outputPath": "Y:\\Sycles\\SyclesBeatmapEditor\\PartialMusicAnalyzer\\PartialMusicAnalyzer\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

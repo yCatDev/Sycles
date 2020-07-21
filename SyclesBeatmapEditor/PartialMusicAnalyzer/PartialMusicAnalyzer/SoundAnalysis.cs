@@ -111,7 +111,7 @@ namespace PartialMusicAnalyzer
             float tempo = (float)Math.Log10(Math.Sqrt(sum / 1024f));
             if (tempo < 0) tempo = _lastTempo;
             var diff = Math.Abs(tempo - _lastTempo);
-            if (diff > 0 && diff < 0.01) type = BeatType.Hold; 
+            //if (diff > 0 && diff < 0.01) type = BeatType.Hold; 
             _lastTempo = tempo;
             _max = Math.Clamp(Math.Abs(255-Math.Abs(tempo-peakSum)*255), 50,255);
 

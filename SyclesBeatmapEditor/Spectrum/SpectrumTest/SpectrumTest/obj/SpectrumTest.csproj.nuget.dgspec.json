@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "Y:\\Sycles-old\\SyclesBeatmapEditor\\Spectrum\\SpectrumTest\\SpectrumTest\\SpectrumTest.csproj": {}
+    "Y:\\Sycles\\SyclesBeatmapEditor\\Spectrum\\SpectrumTest\\SpectrumTest\\SpectrumTest.csproj": {}
   },
   "projects": {
-    "Y:\\Sycles-old\\SyclesBeatmapEditor\\Spectrum\\SpectrumTest\\SpectrumTest\\SpectrumTest.csproj": {
+    "Y:\\Sycles\\SyclesBeatmapEditor\\Spectrum\\SpectrumTest\\SpectrumTest\\SpectrumTest.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "Y:\\Sycles-old\\SyclesBeatmapEditor\\Spectrum\\SpectrumTest\\SpectrumTest\\SpectrumTest.csproj",
+        "projectUniqueName": "Y:\\Sycles\\SyclesBeatmapEditor\\Spectrum\\SpectrumTest\\SpectrumTest\\SpectrumTest.csproj",
         "projectName": "SpectrumTest",
-        "projectPath": "Y:\\Sycles-old\\SyclesBeatmapEditor\\Spectrum\\SpectrumTest\\SpectrumTest\\SpectrumTest.csproj",
+        "projectPath": "Y:\\Sycles\\SyclesBeatmapEditor\\Spectrum\\SpectrumTest\\SpectrumTest\\SpectrumTest.csproj",
         "packagesPath": "C:\\Users\\ycatd\\.nuget\\packages\\",
-        "outputPath": "Y:\\Sycles-old\\SyclesBeatmapEditor\\Spectrum\\SpectrumTest\\SpectrumTest\\obj\\",
+        "outputPath": "Y:\\Sycles\\SyclesBeatmapEditor\\Spectrum\\SpectrumTest\\SpectrumTest\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

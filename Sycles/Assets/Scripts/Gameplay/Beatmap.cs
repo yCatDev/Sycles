@@ -1,8 +1,20 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
+using UnityEngine;
 
 namespace SyclesInternals.Gameplay
 {
+
+    public class BeatInfo
+    {
+        public GameObject GameObject;
+        public float Speed;
+        public float Delay;
+        public float Time;
+        public float Angle;
+        public int Direction;
+    }
+    
    public enum BeatType
       {
           Regular,
@@ -10,7 +22,7 @@ namespace SyclesInternals.Gameplay
           Shift
       }; 
     
-    struct Beat
+    internal struct Beat
        {
            public float Delay { get; set; }
            public float Tempo { get; set; }

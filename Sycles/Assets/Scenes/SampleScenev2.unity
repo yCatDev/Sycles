@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -168,7 +168,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 172c825dd8c7fc04b99bc344afceb2cc, type: 3}
+  m_audioClip: {fileID: 8300000, guid: c00d6a938d2ba634fa2e49fceb62aa5e, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -278,7 +278,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f6ca94c9d20cd847ae181a3581c3911, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  beatmapFile: {fileID: 4900000, guid: 49fbc487a7ce3ab45af451b816d0de8f, type: 3}
+  beatmapFile: {fileID: 4900000, guid: 36214929554c5d04c9f9f6455f9add94, type: 3}
   player: {fileID: 312608591}
   usualBeatDot: {fileID: 7481408758369251994, guid: aee27961a4f99064c9977833f5d4e5ea,
     type: 3}
@@ -289,7 +289,7 @@ MonoBehaviour:
   circle: {fileID: 862404375}
   fpsText: {fileID: 347577555}
   scoreText: {fileID: 677995065}
-  hit: {fileID: 8300000, guid: afcf96c1c7a181844aaf00e30695d590, type: 3}
+  hit: {fileID: 0}
 --- !u!4 &313256846
 Transform:
   m_ObjectHideFlags: 0

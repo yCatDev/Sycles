@@ -24,8 +24,8 @@ namespace SyclesInternals.Gameplay
         private float _lastStep = 0;
         
         private List<Beat> _beatmap = new List<Beat>();
-        private int _buildIndex = 1, _currentIndex = 0;
-        private Queue<GameObject> _dots = new Queue<GameObject>();
+        private int _buildIndex = 0, _currentIndex = 0;
+        private Queue<BeatInfo> _dots = new Queue<BeatInfo>();
         private int _direction = 1;
         private bool _locked = false;
         private AudioSource _music;
@@ -50,6 +50,8 @@ namespace SyclesInternals.Gameplay
             DOTween.Init();
             
             _beatmap = JsonConvert.DeserializeObject<List<Beat>>(beatmapFile.text);
+            CleanUp(ref _beatmap);
+            
             _c = 1f / _beatmap.Count;
             _music = GetComponent<AudioSource>();
             _adc = GetComponent<AudioDeltaCalculator>();
@@ -63,11 +65,12 @@ namespace SyclesInternals.Gameplay
 
         IEnumerator Begin()
         {
-            _music.Play();
-            /*player.rotateSpeed =*/ _currentTempo = _beatmap[1].Tempo;
+           
+            /*player.rotateSpeed =*/ _currentTempo = _beatmap[0].Tempo;
             yield return null;
            
             _start = true;
+            _music.Play();
         }
         
         // Update is called once per frame
@@ -80,16 +83,17 @@ namespace SyclesInternals.Gameplay
             if (!_start) return;
             if ( _dots.Count < 3 && !_locked)
             {
-                EnqueueDots(CreateBeatDot());
+                _dots.Enqueue(CreateBeatDot());
             }
             else
             {
                 /*if (Input.anyKey)
                 {*/
                     
-                    var obj = _dots.Peek();
-                    var ball = obj.GetComponent<Metaball2D>();
-                    if (Vector2.Distance(player.GetPosition(), obj.transform.position) < 0.55f)
+                    var dot = _dots.Peek();
+                    player.rotateSpeed = dot.Speed*_direction;
+                    var ball = dot.GameObject.GetComponent<Metaball2D>();
+                    if (Vector2.Distance(player.GetPosition(), dot.GameObject.transform.position) < 0.55f)
                     {
                         
                         if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
@@ -98,7 +102,7 @@ namespace SyclesInternals.Gameplay
                             ball.SetColor(Color.white);
                             _hitCount++;
                             //_music.PlayOneShot(hit);
-                            Click(obj);
+                            Click(dot);
                         }else    _wasInRange = true; 
                     }
                     else
@@ -108,7 +112,7 @@ namespace SyclesInternals.Gameplay
                         {
                             //ball.SetColor(Color.white);
                             _missCount++;
-                            Click(obj);
+                            Click(dot);
                         }else
                         {
                             if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space)) _missCount++;
@@ -117,8 +121,8 @@ namespace SyclesInternals.Gameplay
                     
                 /*}*/
             }
-            player.SetDelta(_adc.GetDeltaTime());
-            /*player.rotateSpeed =*/ _currentTempo = Mathf.Lerp(player.rotateSpeed, _tempo,_adc.GetDeltaTime());
+            player.SetDelta(Time.fixedDeltaTime);
+            /*player.rotateSpeed =*/ _currentTempo = Mathf.Lerp(player.rotateSpeed, _tempo,Time.fixedDeltaTime);
 //            Debug.Log($"Speed {player.rotateSpeed} {_tempo} {_direction}");
             _fpsCount = Mathf.Lerp(_fpsCount, 1f / Time.unscaledDeltaTime, Time.fixedDeltaTime);
             fpsText.text = $"FPS {(int) (_fpsCount)}";
@@ -127,19 +131,24 @@ namespace SyclesInternals.Gameplay
         }
 
 
-        private void EnqueueDots(GameObject[] dots)
+        private void CleanUp(ref List<Beat> map)
         {
-            foreach (var dot in dots)
+            for (int i = 0; i < map.Count; i++)
             {
-                _dots.Enqueue(dot);
+                if (map[i].Tempo <= 0 || map[i].Delay <= 0)
+                {
+                    map.RemoveAt(i);
+                    i--;
+                }
             }
         }
+        
 
-        private void Click(GameObject obj)
+        private void Click(BeatInfo obj)
         {
-            var dot = obj.GetComponent<BeatDotController>();
+            var dot = obj.GameObject.GetComponent<BeatDotController>();
             dot.Hide();
-            Debug.Log($"Current track time {_music.time}, current beat time {_beatmap[_buildIndex-1].Delay} ADC delta {_adc.GetDeltaTime()}");
+            Debug.Log($"Current track time {_music.time}, current beat time {obj.Delay} ADC delta {_adc.GetDeltaTime()}");
             if (dot.GetType() == BeatType.Shift)
             {
                 ChangeDirection();
@@ -177,73 +186,51 @@ namespace SyclesInternals.Gameplay
             return ((Mathf.Abs(Mathf.Log10(_rmsValue / RefValue)))+_rmsValue);
         }
 
-        private GameObject[] CreateBeatDot()
+        private BeatInfo CreateBeatDot()
         {
-            GameObject[] o = new GameObject[1];
+            BeatInfo info = new BeatInfo();
+            GameObject dot;
             switch (_beatmap[_buildIndex].BeatType)
             {
-                case BeatType.Regular :
-                     default:
-                    o[0] = Instantiate(usualBeatDot);
+                case BeatType.Regular:
+                case BeatType.Hold:
+                default:
+                    dot = Instantiate(usualBeatDot);
                     break;
                 case BeatType.Shift:
-                    o[0] = Instantiate(shiftBeatDot);
+                    dot = Instantiate(shiftBeatDot);
                     _locked = true;
                     break;
-                case BeatType.Hold:
-                    return BuildHoldLine();
-                
             }
 
             var t = Mathf.Abs(_beatmap[_buildIndex].Delay-_music.time);
-            var anglePerSecond = _beatmap[_buildIndex].Tempo * _adc.GetDeltaTime() * _direction;
-            var step = InternalMath.ArithmeticProgression(_currentTempo, anglePerSecond, t);
-            
-            player.rotateSpeed = step / t;
+            var anglePerSecond = _beatmap[_buildIndex].Tempo * Time.fixedDeltaTime;
+            var step = InternalMath.ArithmeticProgression(_beatmap[_buildIndex].Tempo, anglePerSecond, t)*_direction;
 
+
+            //Debug.Log($"#{_buildIndex} {t}  {anglePerSecond} {_beatmap[_buildIndex].Tempo} {_direction} {_currentTempo}");
             //Debug.Log($"Time: {t}, AnglePerSecond: {anglePerSecond}, Step: {step}, n: {1/t}");
-            Debug.Log($"Creating beat dot, calculated time {t}, time now {_music.time}, needed time {_beatmap[_buildIndex].Delay}, angle {anglePerSecond}, step {step} unscaleddelta {Time.unscaledDeltaTime} fixeddelta {Time.fixedDeltaTime} usual delta {Time.deltaTime} current tempo {_currentTempo}");
+            Debug.Log($"#{_buildIndex} Creating beat dot, calculated time {t}, time now {_music.time}, needed time {_beatmap[_buildIndex].Delay}, angle {anglePerSecond}, step {step} unscaleddelta {Time.unscaledDeltaTime} fixeddelta {Time.fixedDeltaTime} usual delta {Time.deltaTime} current tempo {_currentTempo} adc {_adc.GetDeltaTime()}");
             _lastStep += step;    
-            o[0].transform.position = InternalMath.SetPositionCircular(player.angle+step, circle.xradius);
-            o[0].GetComponent<BeatDotController>().Setup(this, _beatmap[_buildIndex].BeatType);
+           dot.transform.position = InternalMath.SetPositionCircular(player.angle+step, circle.xradius);
+           dot.GetComponent<BeatDotController>().Setup(this, _beatmap[_buildIndex].BeatType);
             _buildIndex++;
-            return o;
+
+            info.Angle = step;
+            info.Delay = _beatmap[_buildIndex].Delay;
+            info.Speed = step / t;
+            info.Time = t;
+            info.GameObject = dot;
+            
+            return info;
         }
 
-        private GameObject[] BuildHoldLine()
-        {
-            bool finished = false;
-            List<GameObject> dots = new List<GameObject>();
-            while (_buildIndex < _beatmap.Count && !finished)
-            {
-                if (_beatmap[_buildIndex].BeatType == BeatType.Hold)
-                {
-                    var t = Mathf.Abs(_beatmap[_buildIndex].Delay - _music.time);
-                    var anglePerSecond = _beatmap[_buildIndex].Tempo * _adc.GetDeltaTime() * _direction;
-                    var step = InternalMath.ArithmeticProgression(_currentTempo, anglePerSecond, t);
-                    var n = (int) (step / 0.15f) + 1;
-                    for (int i = 0; i < n; i++)
-                    {
-                        var o = Instantiate(holdBeatDot);
-                        step = i * 0.15f;
-                        _lastStep += step;
-                        o.transform.position = InternalMath.SetPositionCircular(player.angle + step, circle.xradius);
-                        o.GetComponent<BeatDotController>().Setup(this, BeatType.Hold);
-                        dots.Add(o);
-                    }
-
-                    _buildIndex++;
-                }
-                else finished = true;
-            }
-
-            return dots.ToArray();
-        }
+        
         
         public void ChangeDirection()
         {
             player.direction = _direction *= -1;
-            player.rotateSpeed = _beatmap[_currentIndex].Tempo * _direction;
+            //player.rotateSpeed = _beatmap[_currentIndex].Tempo * _direction;
         }
     }
 }

@@ -17,7 +17,7 @@ namespace PartialMusicAnalyzer
         {
             
             BeatMap beats = new BeatMap();
-            string filename = "xevel";
+            string filename = "belong";
             SoundAnalysis analyzer = new SoundAnalysis($"{filename}.mp3");
             analyzer.OnBeat += (delay, tempo,type) =>
             {

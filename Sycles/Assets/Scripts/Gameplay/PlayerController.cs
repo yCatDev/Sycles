@@ -26,7 +26,7 @@ namespace SyclesInternals.Gameplay
         private void Update()
         {
             this.angle += rotateSpeed * _delta;
-
+            if (this.angle > 360) this.angle -= 360;
             transform.position = InternalMath.SetPositionCircular(this.angle, radius);
 
 
