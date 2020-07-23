@@ -7,8 +7,8 @@ namespace SyclesInternals.Gameplay
 
     public class BeatInfo
     {
+        public int Index;
         public GameObject GameObject;
-        public float Speed;
         public float Delay;
         public float Time;
         public float Angle;

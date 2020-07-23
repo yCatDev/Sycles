@@ -372,6 +372,12 @@
  <Reference Include="Newtonsoft.Json">
  <HintPath>Y:/Sycles/Sycles/Assets/Plugins/Newtonsoft.Json.dll</HintPath>
  </Reference>
+ <Reference Include="ManagedBass">
+ <HintPath>Y:/Sycles/Sycles/Assets/Plugins/Bass/ManagedBass.dll</HintPath>
+ </Reference>
+ <Reference Include="ManagedBass.Wasapi">
+ <HintPath>Y:/Sycles/Sycles/Assets/Plugins/Bass/ManagedBass.Wasapi.dll</HintPath>
+ </Reference>
  <Reference Include="DOTween">
  <HintPath>Y:/Sycles/Sycles/Assets/Plugins/DOTween/DOTween.dll</HintPath>
  </Reference>

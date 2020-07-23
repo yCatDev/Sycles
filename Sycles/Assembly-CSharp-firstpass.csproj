@@ -58,6 +58,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Plugins\Bass\BassAudio.cs" />
      <Compile Include="Assets\Plugins\DOTween\Modules\DOTweenModuleAudio.cs" />
      <Compile Include="Assets\Plugins\DOTween\Modules\DOTweenModulePhysics.cs" />
      <Compile Include="Assets\Plugins\DOTween\Modules\DOTweenModulePhysics2D.cs" />
@@ -353,6 +354,12 @@
  </Reference>
  <Reference Include="Newtonsoft.Json">
  <HintPath>Y:/Sycles/Sycles/Assets/Plugins/Newtonsoft.Json.dll</HintPath>
+ </Reference>
+ <Reference Include="ManagedBass">
+ <HintPath>Y:/Sycles/Sycles/Assets/Plugins/Bass/ManagedBass.dll</HintPath>
+ </Reference>
+ <Reference Include="ManagedBass.Wasapi">
+ <HintPath>Y:/Sycles/Sycles/Assets/Plugins/Bass/ManagedBass.Wasapi.dll</HintPath>
  </Reference>
  <Reference Include="DOTween">
  <HintPath>Y:/Sycles/Sycles/Assets/Plugins/DOTween/DOTween.dll</HintPath>

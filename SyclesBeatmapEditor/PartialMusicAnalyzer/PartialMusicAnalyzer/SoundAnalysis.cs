@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Timers;
 using SFML.System;
@@ -20,16 +21,18 @@ namespace PartialMusicAnalyzer
         private List<string> _devicelist;
         public float beat;
         private Clock _clock;
+        private Stopwatch _debug;
             
         private int handle;
-
+        public float tick_time;
         public byte[] newSpectrumData;
         public byte[] oldSpetrumData;
         private List<float> _peakArray = new List<float>();
         private List<int> _maximusCounter = new List<int>();
         private float _max = 0;
         private float _lastTempo;
-
+        private int tickCount;
+        private float _last;
 
         internal delegate void BeatHandler(float delay, float tempo, BeatType type);
         internal delegate void TickHandler(byte[] spec);
@@ -40,11 +43,13 @@ namespace PartialMusicAnalyzer
         public SoundAnalysis(string filename)
         {
             _clock = new Clock();
+            _debug = new Stopwatch();
+            
             _clock.Restart();
             _fft = new float[16384];
             _timer = new Timer();
             _timer.Elapsed+= OnTick;
-            _timer.Interval = TimeSpan.FromMilliseconds(50).Milliseconds; 
+            _timer.Interval = TimeSpan.FromMilliseconds(10).Milliseconds; 
 
             newSpectrumData = new byte[_lines];
             Init(filename);
@@ -70,8 +75,10 @@ namespace PartialMusicAnalyzer
         
         private void OnTick(object sender, EventArgs e)
         {
-            float tick_time  = (float) Bass.ChannelBytes2Seconds(handle,Bass.ChannelGetPosition(handle, PositionFlags.Bytes));
-          
+            _debug.Start();
+
+            tick_time =
+                (float) Bass.ChannelBytes2Seconds(handle, Bass.ChannelGetPosition(handle, PositionFlags.Bytes));
             int ret = Bass.ChannelGetData(handle,_fft, (int)DataFlags.FFT16384);
             if (ret < -1) return;
             int x, y;
@@ -82,6 +89,7 @@ namespace PartialMusicAnalyzer
             int count = 0;
             float tmpMax = 0;
             _max = 0;
+            tickCount += 10;
             //FFT from BASS_WASAPI sample
             for (x = 0; x < _lines; x++)
             {
@@ -138,20 +146,23 @@ namespace PartialMusicAnalyzer
                 _maximusCounter.Add(count);
             }
 
-            
-            
+
+            float dd = _debug.ElapsedMilliseconds;
             float delay = _clock.ElapsedTime.AsSeconds();
             if (delay>0.25f && DetectBeat(ref beat, newSpectrumData,  oldSpetrumData))
             {
-                Console.WriteLine($"Beat! delay: {tick_time}, tempo is {tempo}, type is {type.ToString()} - average max {averageMax} count {count} max value {_max} average peak {averagePeak}  peak {peakSum}");
+                
+                Console.WriteLine($"Beat! delay: {tick_time}, tempo is {tempo}, type is {type.ToString()} - average max {averageMax} count {count} max value {_max} average peak {averagePeak}  peak {peakSum} tick {tickCount}");
                 OnBeat?.Invoke(tick_time, tempo, type);
                 _clock.Restart();
+                tickCount = 0;
             }
 
             oldSpetrumData = newSpectrumData;
             newSpectrumData = new byte[_lines];
             
             OnSpectrum?.Invoke(newSpectrumData);
+            _debug.Reset();
         }
 
         private bool DetectBeat(ref float beat,byte[] specNew, byte[] specOld)
@@ -165,8 +176,8 @@ namespace PartialMusicAnalyzer
             }
             
             tmp_beat /= specOld.Length;
-            
-            if (tmp_beat>0.5f && tmp_beat > beat)
+
+            if (tmp_beat > 0.5f && tmp_beat > beat)
             {
                 beat = tmp_beat;
                 //Console.WriteLine($"Beat! Difference is {beat}");

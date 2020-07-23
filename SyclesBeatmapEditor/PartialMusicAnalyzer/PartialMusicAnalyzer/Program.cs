@@ -44,6 +44,10 @@ namespace PartialMusicAnalyzer
             Color col = Color.White;
 
             var s = new RectangleShape();
+            var t = new Text("Time", new Font("arial.ttf"));
+            t.Position = new Vector2f(10,300);
+            t.FillColor = Color.Black;
+            t.CharacterSize = 56;
             s.OutlineColor = Color.Black;
             s.OutlineThickness = 10f;
             
@@ -63,6 +67,9 @@ namespace PartialMusicAnalyzer
                         s.Size = new Vector2f(20, analyzer.oldSpetrumData[i] / 2);
 
                         rw.Draw(s);
+
+                        t.DisplayedString = analyzer.tick_time.ToString();
+                        rw.Draw(t);
                     }
 
                 rw.Display();
