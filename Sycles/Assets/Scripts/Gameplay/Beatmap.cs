@@ -11,6 +11,7 @@ namespace SyclesInternals.Gameplay
         public GameObject GameObject;
         public float Delay;
         public float Time;
+        public float Tempo;
         public float Angle;
         public int Direction;
     }

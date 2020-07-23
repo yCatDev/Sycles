@@ -5,13 +5,15 @@ using System.Runtime.Serialization;
 using DG.Tweening;
 using Newtonsoft.Json;
 using UnityEngine;
+using UnityEngine.Animations;
 using UnityEngine.UIElements;
+using Random = UnityEngine.Random;
 
 namespace SyclesInternals.Gameplay
 {
     public class BeatProvider : MonoBehaviour
     {
-
+        [SerializeField] private Camera camera;
         [SerializeField] private TextAsset beatmapFile; 
         [SerializeField] private PlayerController player;
 
@@ -117,14 +119,43 @@ namespace SyclesInternals.Gameplay
                             if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space)) _missCount++;
                         }
                     }
+
+                    var look = camera.GetComponent<LookAtConstraint>();
+                    if (!float.IsInfinity(CalculateMusicTempo()))
+                    {
+                        camera.orthographicSize = Mathf.Lerp(camera.orthographicSize, 5 + CalculateMusicTempo(),
+                            _adc.GetDeltaTime());
+                        look.roll = Mathf.Lerp(look.roll, 
+                            CalculateMusicTempo()*randDir()*5,_adc.GetDeltaTime());
+                    }
             }
             
 //            Debug.Log($"Speed {player.rotateSpeed} {_tempo} {_direction}");
             _fpsCount = Mathf.Lerp(_fpsCount, 1f / Time.unscaledDeltaTime, Time.fixedDeltaTime);
             fpsText.text = $"FPS {(int) (_fpsCount)}";
-            
-            scoreText.text = $"Hits {_hitCount}, misses {_missCount} \n Accuracy {Math.Floor(_c*(_hitCount-_missCount)*100)}%";
+            //scoreText.text = $"Hits {_hitCount}, misses {_missCount} \n Accuracy {Math.Floor(_c*(_hitCount-_missCount)*100)}%";
+
+           
         }
+
+        private int randDir()
+        {
+            var r = Random.Range(0, 1);
+            return r == 0 ? 1 : -1;
+        }
+
+        private float CalculateMusicTempo()
+        {
+            _music.GetOutputData(_samples, 0); // fill array with samples
+            float sum = 0;
+            for (int i = 0; i < QSamples; i++)
+            {
+                sum += _samples[i] * _samples[i]; // sum squared samples
+            }
+            _rmsValue = Mathf.Sqrt(sum / QSamples);
+            return ((Mathf.Abs(Mathf.Log10(_rmsValue / RefValue)))+_rmsValue);
+        }
+
 
         private bool CheckDot(BeatInfo dot, float offset)
         {
@@ -210,7 +241,8 @@ namespace SyclesInternals.Gameplay
            // if (_lastDelay < 0) _lastDelay = _music.GetTimeInSeconds(); 
             if (_lastDelay < 0) _lastDelay = _music.time; 
             var t = Mathf.Abs(_beatmap[_buildIndex].Delay-_lastDelay);
-            var step =/* _beatmap[_buildIndex].Tempo**/t;
+            var step = t+/* _beatmap[_buildIndex].Tempo**/
+                InternalMath.GeomProgression(0.25f, _beatmap[_buildIndex].Tempo, t);
 
             _lastDelay = _beatmap[_buildIndex].Delay;
             //Debug.Log($"#{_buildIndex} {t}  {anglePerSecond} {_beatmap[_buildIndex].Tempo} {_direction} {_currentTempo}");
@@ -223,6 +255,7 @@ namespace SyclesInternals.Gameplay
 
             info.Index = _buildIndex;
             info.Angle = _lastStep;
+            info.Tempo = _beatmap[_buildIndex].Tempo;
             info.Delay = _beatmap[_buildIndex].Delay;
             //info.Speed = Time.deltaTime/t;
             info.Time = t;
