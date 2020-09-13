@@ -91,35 +91,38 @@ namespace SyclesInternals.Gameplay
             {
                     var dot = _dots.Peek();
                     player.SetMovement(dot.Angle, dot.Time);
-                    //Debug.Log($"speed {player.rotateSpeed} = {dot.Speed}*{_direction}");
-                    var ball = dot.GameObject.GetComponent<Metaball2D>();
-                    //
-                    var checking = CheckDot(dot, 0.15f);
-//                    Debug.Log($"{checking} {dot.GameObject.name} {dot.Angle} {player.angle}");
-                    if (CheckDot(dot, 0.1f))
+                    var c = CheckDot(dot, 0.0f);
+                    if (c)
                     {
-                        
-                        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
+                        _wasInRange = true;
+                        if (InputHelper.RegisteredKeyWasPressed())
                         {
-                            ball.SetColor(Color.white);
-                            _hitCount++;
-                            Click(dot);
-                        }else    _wasInRange = true; 
+                            switch (dot.Type)
+                            {
+                                case BeatType.Hold:
+                                case BeatType.Regular:
+                                default:
+                                    Click(dot, InputHelper.IsAPressed);
+                                    break;
+                                case BeatType.Shift:
+                                    Click(dot, InputHelper.IsBPressed);
+                                    break;
+                            }
+                        }
                     }
                     else
                     {
-                        
                         if (_wasInRange)
                         {
-                            //ball.SetColor(Color.white);
                             _missCount++;
-                            Click(dot);
+                            HideDot(dot.GameObject.GetComponent<BeatDotController>(), dot.Delay);
                         }else
                         {
-                            if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space)) _missCount++;
+                            if (InputHelper.RegisteredKeyWasPressed()) _missCount++;
                         }
                     }
 
+                   
                     var look = camera.GetComponent<LookAtConstraint>();
                     if (!float.IsInfinity(CalculateMusicTempo()))
                     {
@@ -133,9 +136,7 @@ namespace SyclesInternals.Gameplay
 //            Debug.Log($"Speed {player.rotateSpeed} {_tempo} {_direction}");
             _fpsCount = Mathf.Lerp(_fpsCount, 1f / Time.unscaledDeltaTime, Time.fixedDeltaTime);
             fpsText.text = $"FPS {(int) (_fpsCount)}";
-            //scoreText.text = $"Hits {_hitCount}, misses {_missCount} \n Accuracy {Math.Floor(_c*(_hitCount-_missCount)*100)}%";
-
-           
+            scoreText.text = $"Hits {_hitCount}, misses {_missCount} \n Accuracy {Math.Floor(_c*(_hitCount-_missCount)*100)}%";
         }
 
         private int randDir()
@@ -159,20 +160,19 @@ namespace SyclesInternals.Gameplay
 
         private bool CheckDot(BeatInfo dot, float offset)
         {
-//            Debug.Log($"{dot.Angle-player.angle}");
+//            Debug.Log($"{Vector2.Distance(player.transform.position, dot.GameObject.transform.position)}");
             if (_direction > 0)
             {
-                if (dot.Angle-player.angle>offset)
+                if ((dot.Angle)-player.angle>offset)
                     return true;
                 else return false;
             }
             else
             {
-                if (player.angle - dot.Angle>offset)
+                if (player.angle - (dot.Angle)>offset)
                     return true;
                 else return false;
             }
-            
         }
 
         private void CleanUp(ref List<Beat> map)
@@ -188,26 +188,41 @@ namespace SyclesInternals.Gameplay
         }
         
 
-        private void Click(BeatInfo obj)
+        private void Click(BeatInfo obj, Func<bool> checker)
         {
             var dot = obj.GameObject.GetComponent<BeatDotController>();
-            dot.Hide();
-            float diff = 0;
-            //if (_music.GetTimeInSeconds() > obj.Delay) ;
-            //    diff = _music.GetTimeInSeconds() - obj.Delay;
-            if (_music.time > obj.Delay) ;
-                diff = _music.time - obj.Delay;
-            Debug.Log($"Current track time {_music.time}, current beat time {obj.Delay} ADC delta {_adc.GetDeltaTime()}");
-            //Debug.Log($"Current track time {_music.GetTimeInSeconds()}, current beat time {obj.Delay} ADC delta {_adc.GetDeltaTime()}");
-            if (dot.GetType() == BeatType.Shift)
+            bool hit = checker() && Vector2.Distance(player.transform.position, obj.GameObject.transform.position)<2f;
+            Debug.Log($"{Vector2.Distance(player.transform.position, obj.GameObject.transform.position)}");
+            if (!hit)
             {
-                ChangeDirection();
+                _missCount++;
+                return;
             }
+            dot.GetComponent<Metaball2D>().SetColor(Color.white);
+            _hitCount++;
+            
+            HideDot(dot, obj.Delay);
+        }
+
+        private void HideDot(BeatDotController dot, float delay)
+        {
+            dot.Hide();
+            
+            Debug.Log($"Current track time {_music.time}, current beat time {delay}");
+            if (dot.GetType() == BeatType.Shift)
+                ChangeDirection();
 
             _dots.Dequeue();
-            _dots.Peek().Time -= diff;
-            player.ResetDelta();
+            _dots.Peek().Time -= CalculateDiff(delay);
+            
             _wasInRange = false;
+        }
+        
+        private float CalculateDiff(float delay)
+        {
+            if (_music.time > delay)
+                return _music.time - delay;
+            return 0;
         }
         
         
@@ -241,8 +256,8 @@ namespace SyclesInternals.Gameplay
            // if (_lastDelay < 0) _lastDelay = _music.GetTimeInSeconds(); 
             if (_lastDelay < 0) _lastDelay = _music.time; 
             var t = Mathf.Abs(_beatmap[_buildIndex].Delay-_lastDelay);
-            var step = t+/* _beatmap[_buildIndex].Tempo**/
-                InternalMath.GeomProgression(0.25f, _beatmap[_buildIndex].Tempo, t);
+            var step = t*_beatmap[_buildIndex].Tempo/*+/* _beatmap[_buildIndex].Tempo*#1#
+                InternalMath.GeomProgression(0.25f, _beatmap[_buildIndex].Tempo, t)*/;
 
             _lastDelay = _beatmap[_buildIndex].Delay;
             //Debug.Log($"#{_buildIndex} {t}  {anglePerSecond} {_beatmap[_buildIndex].Tempo} {_direction} {_currentTempo}");
@@ -257,7 +272,7 @@ namespace SyclesInternals.Gameplay
             info.Angle = _lastStep;
             info.Tempo = _beatmap[_buildIndex].Tempo;
             info.Delay = _beatmap[_buildIndex].Delay;
-            //info.Speed = Time.deltaTime/t;
+            info.Type = _beatmap[_buildIndex].BeatType;
             info.Time = t;
             info.GameObject = dot;
             

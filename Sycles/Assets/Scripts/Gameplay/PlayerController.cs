@@ -19,15 +19,15 @@ namespace SyclesInternals.Gameplay
         private Vector3 _centre;
         public float angle = -1;
         public int direction = 1;
-        private bool _loked = false;
-        private float d;
+        private bool _locked = false;
+        private float elapsed;
         
         // Start is called before the first frame update
         private void Start()
         {
             DOTween.Init();
-            DOTween.useSmoothDeltaTime = true;
             DOTween.defaultEaseType = Ease.Linear;
+            DOTween.defaultUpdateType = UpdateType.Fixed;
             
             _centre = transform.position;
             SetMovement(0,0);
@@ -37,31 +37,41 @@ namespace SyclesInternals.Gameplay
         // Update is called once per frame
         private void Update()
         {
-         
-
-            //if (this.angle > 360) this.angle -= 360;
+            
+            if (elapsed < targetTime )
+            {
+                angle = Mathf.Lerp( this.angle, targetAngle, elapsed / targetTime );
+                elapsed += Time.deltaTime;
+            }
+            else
+            {
+                _locked = false;
+            }
+            
             transform.position = InternalMath.SetPositionCircular(this.angle, radius);
         }
 
+      
         public Vector3 GetPosition() => transform.position;
 
         public void SetMovement(float angle, float time)
         {
             targetAngle = angle;
             targetTime = time;
+            if (!_locked)
+            {
+                elapsed = 0;
+                _locked = true;
+            }
 
-            if (!_loked)
+            /*if (!_loked)
             {
                 DOTween.To(() => this.angle, (a) => this.angle = a, targetAngle, targetTime)
                     .onComplete+=() => _loked = false;
                 _loked = true;
-            }
+            }*/
         }
-
-        public void ResetDelta()
-        {
-            _delta = d = 0;
-        }
+        
         
     }
 }

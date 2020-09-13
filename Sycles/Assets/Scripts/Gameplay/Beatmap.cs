@@ -14,6 +14,7 @@ namespace SyclesInternals.Gameplay
         public float Tempo;
         public float Angle;
         public int Direction;
+        public BeatType Type;
     }
     
    public enum BeatType

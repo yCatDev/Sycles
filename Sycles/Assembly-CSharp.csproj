@@ -61,6 +61,9 @@
      <Compile Include="Assets\RayMarching\Scripts\Metaball2D.cs" />
      <Compile Include="Assets\RayMarching\Scripts\MetaballRender2D.cs" />
      <Compile Include="Assets\RayMarching\Scripts\MetaballSystem2D.cs" />
+     <Compile Include="Assets\Scripts\BeatmapEditor\BeatmapEditor.cs" />
+     <Compile Include="Assets\Scripts\BeatmapEditor\EditorDotData.cs" />
+     <Compile Include="Assets\Scripts\BeatmapEditor\EditorPointerController.cs" />
      <Compile Include="Assets\Scripts\Circle.cs" />
      <Compile Include="Assets\Scripts\Gameplay\AudioDeltaCalculator.cs" />
      <Compile Include="Assets\Scripts\Gameplay\BeatDotController.cs" />
@@ -68,6 +71,7 @@
      <Compile Include="Assets\Scripts\Gameplay\Beatmap.cs" />
      <Compile Include="Assets\Scripts\Gameplay\PlayerController.cs" />
      <Compile Include="Assets\Scripts\Gameplay\UsualBeatDotController.cs" />
+     <Compile Include="Assets\Scripts\InputHelper.cs" />
      <Compile Include="Assets\Scripts\InternalMath.cs" />
      <Compile Include="Assets\Scripts\SDF\Master.cs" />
      <Compile Include="Assets\Scripts\SDF\Shape.cs" />
@@ -76,6 +80,7 @@
      <Compile Include="Assets\SimpleSpectrum\Scripts\SimpleSpectrum.cs" />
      <None Include="Assets\SimpleSpectrum\SimpleSpectrum_Changelog.txt" />
      <None Include="Assets\SimpleSpectrum\SimpleSpectrum_DOCUMENTATION.txt" />
+     <None Include="Assets\Shaders\UIBlur.shader" />
      <None Include="Assets\SimpleSpectrum\Scripts\WebGLInject.txt" />
      <None Include="Assets\SimpleSpectrum\Misc\SurfaceGradientLerp.shader" />
      <None Include="Assets\SimpleSpectrum\Misc\lightweightGradientLerpSprite.shader" />

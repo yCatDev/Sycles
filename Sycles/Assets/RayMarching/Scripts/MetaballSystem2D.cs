@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public static class MetaballSystem2D
@@ -27,7 +28,6 @@ public static class MetaballSystem2D
     
     public static List<Metaball2D> Get()
     {
-        //CleanUp();
         return metaballs;
     }
 

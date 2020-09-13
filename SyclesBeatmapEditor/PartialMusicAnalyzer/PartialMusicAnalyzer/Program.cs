@@ -17,7 +17,7 @@ namespace PartialMusicAnalyzer
         {
             
             BeatMap beats = new BeatMap();
-            string filename = "treachery";
+            string filename = "jojo";
             SoundAnalysis analyzer = new SoundAnalysis($"{filename}.mp3");
             analyzer.OnBeat += (delay, tempo,type) =>
             {

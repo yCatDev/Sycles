@@ -149,7 +149,7 @@ namespace PartialMusicAnalyzer
 
             float dd = _debug.ElapsedMilliseconds;
             float delay = _clock.ElapsedTime.AsSeconds();
-            if (delay>0.25f && DetectBeat(ref beat, newSpectrumData,  oldSpetrumData))
+            if (delay>=1.6f-tempo && DetectBeat(ref beat, newSpectrumData,  oldSpetrumData))
             {
                 
                 Console.WriteLine($"Beat! delay: {tick_time}, tempo is {tempo}, type is {type.ToString()} - average max {averageMax} count {count} max value {_max} average peak {averagePeak}  peak {peakSum} tick {tickCount}");

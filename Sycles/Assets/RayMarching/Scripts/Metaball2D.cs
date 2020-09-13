@@ -9,7 +9,8 @@ public class Metaball2D : MonoBehaviour
 {
 
     [SerializeField] public Color color;
-    
+
+
     private void Awake()
     {
  
@@ -24,6 +25,15 @@ public class Metaball2D : MonoBehaviour
         MetaballSystem2D.Add(this);
     }*/
 
+    private void OnBecameVisible()
+    {
+        //IsInView = true;
+    }
+
+    private void OnBecameInvisible()
+    {
+        //IsInView = false;
+    }
 
     private void Update()
     {
@@ -34,7 +44,8 @@ public class Metaball2D : MonoBehaviour
     {
         return new Vector4(color.r, color.g, color.b,1);
     }
-
+    
+    
     public void SetColor(Color color)
     {
         this.color = color; 
